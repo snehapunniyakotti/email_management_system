@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Two-Factor Authentication</title>
+</head>
+<body>
+    <h1>Two-Factor Authentication Required</h1>
+    <p>Please enter the code from your authenticator app.</p>
+    <form action="/verify" method="post">
+        <input type="text" name="code" placeholder="Authenticator Code" required/>
+        <button type="submit">Verify</button>
+		<a href="/reset-qr">reset QR</a>
+    </form>
+</body>
+</html>

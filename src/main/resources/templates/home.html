@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="home.css">
+    <script defer src="./home.js"></script>
+</head>
+
+<body>
+    <div class="app">
+        <!-- SIDEBAR LEFT SIDE -->
+        <aside class="sidebar">
+            <div class="brand">
+                <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path fill="#EA4335" d="M24 9l14 10v18h-8V22L24 15l-6 7v15h-8V19z" />
+                </svg>
+                <b>Gmail</b>
+				<!--<a href="/logout">LOGOUT</a>-->
+				<form action="/logout" method="get">
+				    <button type="submit">Logout</button>
+				</form>
+            </div>
+
+            <div class="compose" id="composeBtn"><svg class="icon" viewBox="0 0 24 24">
+                    <path
+                        d="M3 20h18v2H3zM14.06 9.02l-9.02 9.02L3 21l2.96-2.04 9.02-9.02-0.92-0.92zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+                </svg>Compose</div>
+            <!--core folder  -->
+            <div class="nav-section" id="coreFolders"></div>
+            <!-- category -->
+            <div class="nav-more" id="categoryToggle">
+                <span id="categoryLabel">▼ Category</span>
+            </div>
+            <div class="nav-section" id="categoryFolders" style="display:none"></div>
+            <!-- more -->
+            <div class="nav-more" id="moreToggle">
+                <span id="moreLabel">▼ More</span>
+            </div>
+            <div class="nav-section" id="moreFolders" style="display:none"></div>
+            <!-- label -->
+            <div class="labels-header"><span>Labels</span><button id="addLabelBtn" title="Create new label"
+                    style="border:none;background:transparent;cursor:pointer;font-size:18px;line-height:1">＋</button>
+            </div>
+            <div id="labelsList"></div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="main">
+            <div class="topbar">
+                <div class="menu-btn" id="filterIcon" title="Menu">
+                    <!-- <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z" />
+                    </svg> -->
+                    ☰
+                </div>
+                <div class="search" role="search">
+                    <svg class="icon" id="searchIcon" viewBox="0 0 24 24">
+                        <path
+                            d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9.5 14C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                    </svg>
+                    <input id="searchInput" placeholder="Search mail" />
+                </div>
+            </div>
+
+
+
+            <div class="content">
+
+                <!-- right column contains compact preview area and detailed sliding panel -->
+                <div class="detail-wrap">
+                    <div class="actions">
+                        <label class="checkbox"><input id="selectAll" type="checkbox" /></label>
+                        <div class="action-btn" id="refreshBtn" title="Refresh">
+                            ⟳
+                        </div>
+                        <div class="action-btn-more" id="detailImportant1" title="Important">⚑</div>
+                        <div class="action-btn-more" id="detailArchive1" title="Archive">📩</div>
+                        <div class="action-btn-more" id="detailInfo1" title="Report Spam">🛈</div>
+                        <div class="action-btn-more" id="detailDelete1" title="Delete"><svg class="icon"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                            </svg></div>
+                        <div class="action-btn-more" id="detailMarkRead1" title="Mark as read/unread"><svg class="icon"
+                                viewBox="0 0 24 24">
+                                <path d="M20 6L9 17l-5-5 1.41-1.41L9 14.17 18.59 4.59 20 6z" />
+                            </svg></div>
+                        <div class="action-btn-more" id="detailMove1" title="Move to"><svg class="icon"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M20 8h-3V4l-4 4 4 4V8h3v8H4V4h7V2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8z" />
+                            </svg></div>
+
+                        <div class="action-btn" title="More" id="detailMore1">
+                            ⋯
+                        </div>
+                        <!-- <div class="action-btn" title="More"><svg class="icon" viewBox="0 0 24 24">
+                                <circle cx="5" cy="12" r="2" />
+                                <circle cx="12" cy="12" r="2" />
+                                <circle cx="19" cy="12" r="2" />
+                            </svg></div> -->
+
+                        <div class="pager">
+                            <span id="rangeText">0–0 of 0</span>
+                            <div class="action-btn" id="prevPage" title="Newer"><svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+                                </svg></div>
+                            <div class="action-btn" id="nextPage" title="Older"><svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z" />
+                                </svg></div>
+                        </div>
+                    </div>
+
+                    <div class="tabs" id="tabs">
+                        <div class="tab active" data-category="INBOX/personal">Primary</div>
+                        <div class="tab" data-category="INBOX/promotions">Promotions</div>
+                        <div class="tab" data-category="INBOX/social">Social</div>
+                        <div class="tab" data-category="INBOX/updates">Updates</div>
+                    </div>
+                    <!-- MAIL LISTING -->
+                    <section class="list" id="list"></section>
+                    <!-- <aside class="preview" id="preview"><div class="empty-preview">Select a message to read</div></aside> -->
+
+                    <!-- DETAILED MAIL PANEL (slides in when open) -->
+                    <div class="detail-panel" id="detailPanel" aria-hidden="true">
+                        <div class="detail-toolbar">
+                            <div class="left">
+                                <div class="action-btn" id="detailBack" title="Back"><svg class="icon"
+                                        viewBox="0 0 24 24">
+                                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+                                    </svg></div>
+                                <div class="action-btn" id="detailImportant2" title="Important">⚑</div>
+                                <div class="action-btn" id="detailArchive2" title="Archive">📩</div>
+                                <div class="action-btn" id="detailInfo2" title="Report Spam">🛈</div>
+                                <div class="action-btn" id="detailDelete2" title="Delete"><svg class="icon"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                                    </svg></div>
+                                <div class="action-btn" id="detailMarkRead2" title="Mark as read/unread"><svg
+                                        class="icon" viewBox="0 0 24 24">
+                                        <path d="M20 6L9 17l-5-5 1.41-1.41L9 14.17 18.59 4.59 20 6z" />
+                                    </svg></div>
+                                <div class="action-btn" id="detailMove2" title="Move to"><svg class="icon"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            d="M20 8h-3V4l-4 4 4 4V8h3v8H4V4h7V2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8z" />
+                                    </svg></div>
+                                <div class="action-btn" id="detailMore2" title="More"><svg class="icon"
+                                        viewBox="0 0 24 24">
+                                        <circle cx="5" cy="12" r="2" />
+                                        <circle cx="12" cy="12" r="2" />
+                                        <circle cx="19" cy="12" r="2" />
+                                    </svg></div>
+                            </div>
+
+                            <!-- pagination in toolbar -->
+                            <div class="right">
+                                <div id="detailPager" class="muted">0 of 0</div>
+                                <div class="action-btn" id="detailPrev"><svg class="icon" viewBox="0 0 24 24">
+                                        <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+                                    </svg></div>
+                                <div class="action-btn" id="detailNext"><svg class="icon" viewBox="0 0 24 24">
+                                        <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z" />
+                                    </svg></div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="detail-body">
+                            <div class="mail-head" id="mailHead">
+                               
+                            </div>
+                            <div class="mail-body" id="mailBody">
+                            </div>
+                        </div> -->
+                        <div class="detail-body" id="mailContainer">
+                            <!-- Multiple detail-body elements will be inserted here dynamically -->
+                        </div>
+                    </div><!-- detail-panel -->
+                </div><!-- detail-wrap -->
+            </div><!-- content -->
+
+
+            <!-- Compose dialog -->
+            <div class="compose-dialog" id="composeDialog">
+                <div class="compose-header">
+                    <span id="compose-header-msg">New Message</span> 
+                    <button id="closeBtn">&times;</button>
+                </div>
+                <div class="compose-body">
+                    <form id="emailForm">
+                        <label id="composeToLable">
+                            To
+                            <input type="email" id="composeTo" placeholder="To">
+                        </label>
+
+                        <label id="composeCcLable">
+                            Cc
+                            <input type="text" id="composeCC" placeholder="Cc">
+                        </label>
+
+                        <label id="composeBccLable">
+                            Bcc
+                            <input type="text" id="composeBcc" placeholder="Bcc">
+                        </label>
+
+                        <label id="composeSubjectLable">
+                            Subject
+                            <input type="text" id="composeSubject" placeholder="Subject">
+                        </label>
+
+                        <label id="composeMsgLable">
+                            Message
+                            <textarea id="composeMsg" placeholder="Message body..."></textarea>
+                        </label>
+
+                        <input type="datetime-local" name="datetime" id="scheduleDateTime">
+                        <!-- Attachment preview -->
+                        <div class="attachments" id="attachments"></div>
+                    </form>
+                </div>
+                <div class="compose-footer">
+                    <button class="send-btn">Send</button>
+                    <button type="button" class="schedule-btn" id="scheduleBtn">Schedule</button>
+                    <button type="button" class="schedule-send-btn" id="scheduleSendBtn">Schedule Send</button>
+                    <label for="fileInput" style="cursor: pointer;">📎</label>
+                    <input type="file" id="fileInput" multiple>
+                </div>
+            </div>
+
+            <!-- Main menu for label as-->
+            <div id="moreMenu" class="menu">
+                <div class="menu-item" id="labelMenu">
+                </div>
+            </div>
+
+            <!-- Dialog for Filter Form -->
+            <dialog id="filterDialog">
+                <form id="filterForm" method="dialog">
+                    <label>From</label>
+                    <input type="text" name="fromAdd">
+            
+                    <label>To</label>
+                    <input type="text" name="toAdd">
+            
+                    <label>Subject</label>
+                    <input type="text" name="subject">
+            
+                    <label>Has the words</label>
+                    <input type="text" name="hasTheWord" >
+            
+                    <label>Doesn't have</label>
+                    <input type="text" name="doesNotHave">
+            
+                    <label>Size</label>
+                    <div class="inline">
+                        <select name="sizeRange">
+                            <option value="GT">greater than</option>
+                            <option value="LT">less than</option>
+                        </select>
+                        <input type="number" name="sizeValue" placeholder="Size">
+                        <select name="size">
+                            <option value="MB">MB</option>
+                            <option value="KB">KB</option>
+                        </select>
+                    </div>
+            
+                    <label>Date within</label>
+                    <!-- <input type="text" name="date" placeholder="1 day"> -->
+                    <div class="inline">
+                        <select name="dateWithin">
+                            <option value="1 DAY">1 day</option>
+                            <option value="3 DAY">3 days</option>
+                            <option value="1 WEEK">1 week</option>
+                            <option value="1 MONTH">1 month</option>
+                            <option value="6 MONTH">6 months</option>
+                            <option value="1 YEAR">1 year</option>
+                        </select>
+                        <input type="date" name="date" id="beforeDate">
+                        <button type="button" id="todayDate">Today</button>
+                        <button type="button" id="clearDate">None</button>
+                    </div>
+            
+                    <label>Search</label>
+                    <select name="folder">
+                        <!-- <option value="[Gmail]/All Mail">All Mail</option>
+                        <option value="INBOX">Inbox</option>
+                        <option value="[Gmail]/Starred">Starred</option>
+                        <option value="[Gmail]/Sent Mail">Sent Mail</option> -->
+                    </select>
+            
+                    <div class="checkbox-row">
+                        <label><input type="checkbox" name="hasAttachment"> Has attachment</label>
+                        <!-- <label><input type="checkbox" name="noChats"> Don't include chats</label> -->
+                    </div>
+            
+                    <div class="actions">
+                        <button type="button" id="filterCloseBtn">Cancel</button>
+                        <button type="submit" id="searchBtn">Search</button>
+                    </div>
+                </form>
+            </dialog>
+        </main>
+    </div>
+     <!-- The loader container -->
+     <div id="loader-overlay" class="hidden">
+        <div class="spinner"></div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <timestamp key="START_TIME" datePattern="yyyyMMdd_HHmmss"/>
+
+    <property name="LOG_FILE_NAME" value="logs/Gmail-${START_TIME}.log"/>
+    
+    <property name="LOG_UNKNOWN_EXCEPTION_FILE_NAME" value="logs/Gmail-Unknown-Exp-${START_TIME}.log"/>
+    
+    <property name="LOG_KNOWN_EXCEPTION_FILE_NAME" value="logs/Gmail-Known-Exp-${START_TIME}.log"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+           <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %cyan(%logger{36}) - %msg%n</pattern>
+            <highlight>
+            <color>TRACE=WHITE</color>
+            <color>DEBUG=CYAN</color>
+            <color>INFO=GREEN</color>
+            <color>WARN=YELLOW</color>
+            <color>ERROR=RED</color>
+        </highlight>
+        </encoder>
+    </appender>
+
+    <!--log file-->
+    <appender name="APP-FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_FILE_NAME}</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--unknown exception log file name--> 
+	<appender name="FILE-UNKNOWN-EXCEPTION" class="ch.qos.logback.core.FileAppender">
+		<file>${LOG_UNKNOWN_EXCEPTION_FILE_NAME}</file>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}- %msg%n</pattern>
+		</encoder>
+	</appender>
+
+    <!--known exception log file name--> 
+	<appender name="FILE-KNOWN-EXCEPTION" class="ch.qos.logback.core.FileAppender">
+		<file>${LOG_KNOWN_EXCEPTION_FILE_NAME}</file>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}- %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="com.gmail.demo" level="info" additivity="false">
+		<appender-ref ref="APP-FILE" />
+		<appender-ref ref="CONSOLE" />
+	</logger>
+
+	<logger name="unknown-exception-log" level="info" additivity="false">
+		<appender-ref ref="FILE-UNKNOWN-EXCEPTION" />
+		<appender-ref ref="CONSOLE" />
+	</logger>
+
+	<logger name="known-exception-log" level="info" additivity="false">
+		<appender-ref ref="FILE-KNOWN-EXCEPTION" />
+		<appender-ref ref="CONSOLE" />
+	</logger>
+
+
+	<!-- TRACE DEBUG INFO WARN ERROR -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+       <!-- <appender-ref ref="FILE"/>-->
+    </root>
+
+</configuration>
+
+
+
+
+
